@@ -1,34 +1,35 @@
 #include <stdio.h>
 
-#define NUM_AGE_CLASSES 6
+#define FAIXAS_ETARIAS 6
 
-void printMatrix(double matrix[][NUM_AGE_CLASSES]) {
+void imprimeMatriz(double matriz[][FAIXAS_ETARIAS]) {
     int i, j;
-    for (i = 0; i < NUM_AGE_CLASSES; i++) {
-        for (j = 0; j < NUM_AGE_CLASSES; j++) {
-            printf("%.2f\t", matrix[i][j]);
+    for (i = 0; i < FAIXAS_ETARIAS; i++) {
+        for (j = 0; j < FAIXAS_ETARIAS; j++) {
+            printf("%.2f\t", matriz[i][j]);
         }
         printf("\n");
     }
 }
 
-void multiplyMatrix(double matrix[][NUM_AGE_CLASSES], double vector[]) {
+void multiplicaMatriz(double matriz[][FAIXAS_ETARIAS], double vetor[]) {
     int i, j;
-    double result[NUM_AGE_CLASSES] = {0.0};
+    double resultado[FAIXAS_ETARIAS] = {0.0};
 
-    for (i = 0; i < NUM_AGE_CLASSES; i++) {
-        for (j = 0; j < NUM_AGE_CLASSES; j++) {
-            result[i] += matrix[i][j] * vector[j];
+    for (i = 0; i < FAIXAS_ETARIAS; i++) {
+        for (j = 0; j < FAIXAS_ETARIAS; j++) {
+            resultado[i] += matriz[i][j] * vetor[j];
         }
     }
 
-    for (i = 0; i < NUM_AGE_CLASSES; i++) {
-        vector[i] = result[i];
+    for (i = 0; i < FAIXAS_ETARIAS; i++) {
+        vetor[i] = resultado[i];
     }
 }
 
+
 int main() {
-    double leslieMatrix[NUM_AGE_CLASSES][NUM_AGE_CLASSES] = {
+    double matrizLeslie[FAIXAS_ETARIAS][FAIXAS_ETARIAS] = {
         {0.0, 0.0, 0.5, 0.8, 0.3, 0.0},
         {0.8, 0.0, 0.0, 0.0, 0.0, 0.0},
         {0.0, 0.9, 0.0, 0.0, 0.0, 0.0},
@@ -37,23 +38,23 @@ int main() {
         {0.0, 0.0, 0.0, 0.0, 0.3, 0.0}
     };
 
-    double initialPopulation[NUM_AGE_CLASSES] = {50.0, 40.0, 30.0, 20.0, 10.0, 5.0};
+    double PopulacaoInicial[FAIXAS_ETARIAS] = {50.0, 40.0, 30.0, 20.0, 10.0, 5.0};
 
-    printf("Leslie Matrix:\n");
-    printMatrix(leslieMatrix);
+    printf("Matriz Leslie:\n");
+    imprimeMatriz(matrizLeslie);
 
-    printf("\nInitial Population:\n");
-    for (int i = 0; i < NUM_AGE_CLASSES; i++) {
-        printf("%.2f\t", initialPopulation[i]);
+    printf("\nPopulacao Inicial:\n");
+    for (int i = 0; i < FAIXAS_ETARIAS; i++) {
+        printf("%.2f\t", PopulacaoInicial[i]);
     }
     printf("\n\n");
 
-    for (int year = 1; year <= 101; year++) {
-        multiplyMatrix(leslieMatrix, initialPopulation);
+    for (int mes = 1; mes <= 105; mes++) {
+        multiplicaMatriz(matrizLeslie, PopulacaoInicial);
 
-        printf("Year %d:\n", year);
-        for (int i = 0; i < NUM_AGE_CLASSES; i++) {
-            printf("%.2f\t", initialPopulation[i]);
+        printf("Mes %d:\n", mes);
+        for (int i = 0; i < FAIXAS_ETARIAS; i++) {
+            printf("%.2f\t", PopulacaoInicial[i]);
         }
         printf("\n");
     }
