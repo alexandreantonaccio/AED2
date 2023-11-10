@@ -34,8 +34,8 @@ int achadiferenca(char palavra[], char chave[], int i){
   }
 }
 
-No* inserefilhos(No inter, No raiz, char chave[], int diferenca){
-  if(chave[diferenca]->raiz->palavra[diferenca]){
+No* inserefilhos(No *inter, No *raiz, char chave[], int diferenca){
+  if(chave[diferenca] > raiz->palavra[diferenca]){
     inter->palavra[0]=chave[diferenca];
     inter->direita=criafolha(chave);
     inter->esquerda=raiz;
@@ -164,7 +164,7 @@ No* remover(No* raiz, No* pai){
   }
 }
 
-No* verificaremocao(No raiz, No pai, char chave[]){
+No* verificaremocao(No *raiz, No *pai, char chave[]){
   if(strcmp(raiz->palavra, chave)==0){
     return remover(raiz, pai);
   }
