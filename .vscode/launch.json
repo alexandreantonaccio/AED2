@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/alexa/Documents/Github/c-cpp",
-      "program": "c:/Users/alexa/Documents/Github/c-cpp/build/Debug/outDebug",
+      "cwd": "c:/Users/alexandre/Documents/GitHub/AED2",
+      "program": "c:/Users/alexandre/Documents/GitHub/AED2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
