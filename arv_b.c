@@ -44,7 +44,7 @@ void divideNo(int item, int *pval, int pos, struct tipoNo*node,
   int mediano, j;
 
   if (pos > MIN)
-    mediano = (MIN + 1)/2;
+    mediano = MIN + 1;
   else
     mediano = MIN;
 
