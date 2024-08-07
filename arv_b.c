@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 5
-#define MIN 3
+#define MAX 3
+#define MIN 2
 
 struct tipoNo{
-  int item[MAX + 1], contador;
+  int item[MAX], contador;
   struct tipoNo*ponteiros[MAX + 1];
 };
 
@@ -248,7 +248,7 @@ int apagaValNo(int item, struct tipoNo*meuNo) {
         copiaSucessor(meuNo, pos);
         flag = apagaValNo(meuNo->item[pos], meuNo->ponteiros[pos]);
         if (flag == 0) {
-          printf("Given data is not present in B-Tree\n");
+          printf("Não esta presente na arvore\n");
         }
       } else {
         removeVal(meuNo, pos);
@@ -268,7 +268,7 @@ int apagaValNo(int item, struct tipoNo*meuNo) {
 void apaga (int item, struct tipoNo*meuNo) {
   struct tipoNo*tmp;
   if (!apagaValNo(item, meuNo)) {
-    printf("Não Tem\n");
+    printf("Nao Tem\n");
     return;
   } else {
     if (meuNo->contador == 0) {
@@ -283,6 +283,7 @@ void apaga (int item, struct tipoNo*meuNo) {
 
 void pesquisa(int item, int *pos, struct tipoNo*meuNo) {
   if (!meuNo) {
+    printf("Nao esta presente na arvore");
     return;
   }
 
@@ -293,12 +294,16 @@ void pesquisa(int item, int *pos, struct tipoNo*meuNo) {
        (item < meuNo->item[*pos] && *pos > 1); (*pos)--)
       ;
     if (item == meuNo->item[*pos]) {
-      printf("%d present in B-tree", item);
+      printf("%d presente na árvore", item);
       return;
     }
   }
   pesquisa(item, pos, meuNo->ponteiros[*pos]);
   return;
+}
+
+void pesquisaVetor(int item, int*pos, struct tipoNo*meuNo) {
+  
 }
 
 void imprime(struct tipoNo*meuNo) {
@@ -319,6 +324,7 @@ int main() {
   insercao(9);
   insercao(10);
   insercao(11);
+  insercao(9);
   insercao(15);
   insercao(16);
   insercao(17);
@@ -330,5 +336,10 @@ int main() {
 
   apaga (20, raiz);
   printf("\n");
+  imprime(raiz);
+  printf("\n");
+  pesquisa(20,&ch,raiz);
+  printf("\n");
+  apaga(15,raiz);
   imprime(raiz);
 }
