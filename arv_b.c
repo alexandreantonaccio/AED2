@@ -7,7 +7,7 @@
 #define MIN 2
 
 struct tipoNo{
-  int item[MAX], contador;
+  int item[MAX + 1], contador;
   struct tipoNo*ponteiros[MAX + 1];
 };
 
