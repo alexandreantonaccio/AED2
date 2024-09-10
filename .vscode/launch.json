@@ -5,13 +5,11 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [
-        "//"
-      ],
+      "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/alexandre/Documents/GitHub/AED2",
-      "program": "c:/Users/alexandre/Documents/GitHub/AED2/build/Debug/outDebug",
+      "cwd": "c:/Users/alexandre/Documents/GitHub/AED2/trabalho1_cesar/trabalho",
+      "program": "c:/Users/alexandre/Documents/GitHub/AED2/trabalho1_cesar/trabalho/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
