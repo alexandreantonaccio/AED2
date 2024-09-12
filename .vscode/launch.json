@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/alexandre/Documents/GitHub/AED2/trabalho1_cesar/trabalho",
-      "program": "c:/Users/alexandre/Documents/GitHub/AED2/trabalho1_cesar/trabalho/build/Debug/outDebug",
+      "cwd": "c:/Users/alexa/OneDrive/Documentos/GitHub/AED2/trabalho1_cesar/trabalho",
+      "program": "c:/Users/alexa/OneDrive/Documentos/GitHub/AED2/trabalho1_cesar/trabalho/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

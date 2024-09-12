@@ -2,172 +2,154 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_FUNCAO 100
-#define MAX_ISDN 100
-#define MAX_TITULO 100
-#define MAX_AUTOR 100
-#define MAX_LIVROS 200
-#define MAX_LINE_LENGTH 256
-
-// Estrutura para armazenar as informações de um livro
-typedef struct {
-    char isdn[MAX_ISDN];
-    char titulo[MAX_TITULO];
-    char autor[MAX_AUTOR];
-    int ano;
+// Definição da estrutura do livro
+typedef struct Livro {
+    char isdn[60];
+    char titulo[40];
+    char autor[100];
+    char ano[6];
     int disponibilidade;
+    struct Livro* proximo;
 } Livro;
 
-// Função para adicionar um livro à lista
-void addLivro(Livro livros[], int *numLivros,const char* isdn ,const char* titulo, const char* autor, int ano) {
-    if (*numLivros < MAX_LIVROS) {
-        strcpy(livros[*numLivros].isdn,isdn);
-        strcpy(livros[*numLivros].titulo, titulo);
-        strcpy(livros[*numLivros].autor, autor);
-        livros[*numLivros].ano = ano;
-        livros[*numLivros].disponibilidade = 1;
-        (*numLivros)++;
+// Função para criar um novo livro
+Livro* criarLivro(char* isdn,char* titulo, char* autor, char* ano) {
+    Livro* novoLivro = (Livro*) malloc(sizeof(Livro));
+    strcpy(novoLivro->isdn,isdn);
+    strcpy(novoLivro->titulo, titulo);
+    strcpy(novoLivro->autor, autor);
+    strcpy(novoLivro->ano,ano);
+    novoLivro->disponibilidade = 1;
+    novoLivro->proximo = NULL;
+    return novoLivro;
+}
+
+// Função para inserir um novo livro no início da lista
+void inserirLivro(Livro** lista, char* isdn,char* titulo, char* autor, char* ano) {
+    Livro* novoLivro = criarLivro(isdn,titulo,autor,ano);
+    
+    if (*lista == NULL) {
+        // Se a lista estiver vazia, o novo livro será o primeiro
+        *lista = novoLivro;
     } else {
-        printf("Capacidade máxima de livros atingida!\n");
+        // Percorre a lista até o último livro
+        Livro* atual = *lista;
+        while (atual->proximo != NULL) {
+            atual = atual->proximo;
+        }
+        // Insere o novo livro no final
+        atual->proximo = novoLivro;
     }
 }
 
-// Função para buscar um livro pela chave
-void searchLivro(Livro livros[], int *numLivros, const char* chave) {
-    int found = 0;
-    for (int i = 0; i < *numLivros; i++) {
-        if (strcmp(livros[i].isdn, chave) == 0) {
-            printf("Livro encontrado: ");
-            printf(" ISDN:%s;", livros[i].isdn);
-            printf("  Título: %s;", livros[i].titulo);
-            printf("  Autor: %s;", livros[i].autor);
-            printf("  Ano: %d;", livros[i].ano);
-            printf(" Disponibilidade: %d\n", livros[i].disponibilidade);
-            found = 1;
-        }
-        if (strcmp(livros[i].titulo, chave) == 0) {
-            printf("Livro encontrado: ");
-            printf(" ISDN:%s;", livros[i].isdn);
-            printf("  Título: %s;", livros[i].titulo);
-            printf("  Autor: %s;", livros[i].autor);
-            printf("  Ano: %d;", livros[i].ano);
-            printf(" Disponibilidade: %d\n", livros[i].disponibilidade);
-            found = 1;
-        }
-        if (strcmp(livros[i].autor, chave) == 0) {
-            printf("Livro encontrado: ");
-            printf(" ISDN:%s;", livros[i].isdn);
-            printf("  Título: %s;", livros[i].titulo);
-            printf("  Autor: %s;", livros[i].autor);
-            printf("  Ano: %d;", livros[i].ano);
-            printf(" Disponibilidade: %d\n", livros[i].disponibilidade);
-            found = 1;
-        }
-    }
-    if (!found) {
-        printf("Livro com a chave '%s' não encontrado.\n", chave);
+void imprimirLivro(Livro* livro) {
+    if (livro != NULL) {
+        printf("ISDN: %s;", livro->isdn);
+        printf(" Titulo: %s;", livro->titulo);
+        printf(" Autor: %s;", livro->autor);
+        printf(" Ano: %s;", livro->ano);
+        printf(" Disponibilidade: %d\n", livro->disponibilidade);
     }
 }
 
-void checkInLivro(Livro livros[], int *numLivros, const char* chave) {
-    int found = 0;
-    for (int i = 0; i < *numLivros; i++) {
-        if (strcmp(livros[i].isdn, chave) == 0) {
-            if(livros[i].disponibilidade == 1){
-                printf("Livro ja foi devolvido\n");
-            }
-            else {
-                livros[i].disponibilidade = 1;
-                printf("Check in do livro Realizado\n");
-            }
-            found = 1;
+void buscarLivro(Livro* lista, char* chave) {
+    Livro* atual = lista;
+    while (atual != NULL) {
+        if (strcmp(atual->isdn,chave)==0) {
+            imprimirLivro(atual);
+        } else if(strcmp(atual->titulo,chave)==0){
+            imprimirLivro(atual);
+        } else if(strcmp(atual->autor,chave)==0) {
+            imprimirLivro(atual);
         }
-    }
-    if (!found) {
-        printf("Livro com a chave '%s' não encontrado.\n", chave);
+        atual = atual->proximo;
     }
 }
 
-void checkOutLivro(Livro livros[], int *numLivros, const char* chave) {
-    int found = 0;
-    for (int i = 0; i < *numLivros; i++) {
-        if (strcmp(livros[i].isdn, chave) == 0) {
-            if(livros[i].disponibilidade == 0){
-                printf("Livro nao esta deisponível\n");
+void checkInLivro(Livro* lista,char* chave) {
+    while (lista != NULL) {
+        if (strcmp(lista->isdn,chave)==0) {
+            if(lista->disponibilidade==1) {
+                printf("livro ja devolvido!\n");
+            } else {
+                lista->disponibilidade = 1;
+                printf("Check In realizado com sucesso\n");
             }
-            else {
-                printf("Check out do livro realizado\n");
-                livros[i].disponibilidade = 0;
-            }
-            found = 1;
+            return;
         }
-    }
-    if (!found) {
-        printf("Livro com a chave '%s' não encontrado.\n", chave);
+        lista = lista->proximo;
     }
 }
 
-// Função para imprimir os livros cadastrados
-void printLivros(Livro livros[], int numLivros) {
-    for (int i = 0; i < numLivros; i++) {
-        printf("Livro %d:\n", i + 1);
-        printf(" ISDN:%s;",livros[i].isdn);
-        printf("  Titulo: %s;", livros[i].titulo);
-        printf("  Autor: %s;", livros[i].autor);
-        printf("  Ano: %d;\n", livros[i].ano);
+void checkOutLivro(Livro* lista,char* chave) {
+    while (lista != NULL) {
+        if (strcmp(lista->isdn,chave)==0) {
+            if(lista->disponibilidade==0) {
+                printf("Livro nao disponivel\n");
+            } else {
+                lista->disponibilidade = 0;
+                printf("Check Out realizado com sucesso\n");
+            }
+            return;
+        }
+        lista = lista->proximo;
+    }
+    if(lista==NULL){
+        printf("Livro nao pertence a biblioteca\n");
+    }
+}
+
+void impimirBiblioteca(Livro *lista){
+    printf("\nImprimindo livros da biblioteca!\n\n");
+    while(lista!=NULL){
+        imprimirLivro(lista);
+        lista = lista->proximo;
     }
 }
 
 int main() {
-    // Definindo o caminho do arquivo
-    const char* filename = "ent02.in";
-    
-    // Array para armazenar os livros
-    Livro livros[MAX_LIVROS];
-    int numLivros = 0;
+    Livro* lista = NULL;
+
+    const char* filename = "ent03.in";
 
     // Abrindo o arquivo para leitura
     FILE *file = fopen(filename, "r");
 
     // Variáveis para armazenar os dados do arquivo
-    char line[MAX_LINE_LENGTH];
-    char funcao[MAX_FUNCAO];
-    char isdn[MAX_ISDN];
-    char titulo[MAX_TITULO], autor[MAX_AUTOR];
-    char chave[MAX_TITULO];
-    int ano;
+    char line[256];
+    char funcao[40];
+    char chave[100];
+    char isdn[100];
+    char titulo[100]; 
+    char autor[100];
+    char ano[6];
 
     // Lendo o arquivo linha por linha
     while (fgets(line, sizeof(line), file)) {
-        // Remover o '\n' do final da linha, se houver
-        line[strcspn(line, "\n")] = '\0';
 
         // Lendo os dados separados por ';'
-        if (sscanf(line, "%s %[^;];%[^;];%[^;];%d",funcao,isdn, titulo, autor, &ano) == 5) {
+        if (sscanf(line, "%s%[^;];%[^;];%[^;];%[^\n]",funcao,isdn,titulo,autor,ano) == 5) {
             // Adiciona o livro à lista
-            addLivro(livros, &numLivros,isdn, titulo, autor, ano);
+            inserirLivro(&lista,isdn,titulo,autor,ano);
         } 
-        else if(sscanf(line, "%s %[^;];",funcao,chave) == 2){
+        else if(sscanf(line, "%s%[^;];",funcao,chave) == 2){
             if(strcmp(funcao,"SEARCH")== 0){
-                searchLivro(livros,&numLivros,chave);
+                buscarLivro(lista,chave);
             }
             if(strcmp(funcao,"CHECK_IN")== 0){
-                checkInLivro(livros,&numLivros,chave);
+                checkInLivro(lista,chave);
             }
             if(strcmp(funcao,"CHECK_OUT")== 0){
-                checkOutLivro(livros,&numLivros,chave);
+                checkOutLivro(lista,chave);
             }
         }
         else {
             printf("Formato invalido na linha: %s\n", line);
         }
     }
-
-    // Fechando o arquivo
-    fclose(file);
-
-    // Exibir os livros cadastrados
-    printLivros(livros, numLivros);
-
+    free(file);
+    impimirBiblioteca(lista);
+    // Liberar memória alocada (se necessário)
     return 0;
+
 }
