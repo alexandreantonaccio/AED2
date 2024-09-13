@@ -5,11 +5,11 @@
 
 
 // Função para criar um novo livro
-Livro* criarLivro(char* isdn,char* titulo, char* autor, char* ano) {
+Livro* criarLivro(char* isbn,char* titulo, char* autor, char* ano) {
     Livro* novoLivro = (Livro*) malloc(sizeof(Livro));
-    strcpy(novoLivro->isdn,isdn);
-    strcpy(novoLivro->titulo, titulo);
-    strcpy(novoLivro->autor, autor);
+    strcpy(novoLivro->isbn,isbn);
+    strcpy(novoLivro->titulo,titulo);
+    strcpy(novoLivro->autor,autor);
     strcpy(novoLivro->ano,ano);
     novoLivro->Exemplares = 1;
     novoLivro->proximo = NULL;
@@ -17,8 +17,8 @@ Livro* criarLivro(char* isdn,char* titulo, char* autor, char* ano) {
 }
 
 // Função para inserir um novo livro no início da lista
-void inserirLivro(Livro** lista, char* isdn,char* titulo, char* autor, char* ano) {
-    Livro* novoLivro = criarLivro(isdn,titulo,autor,ano);
+void inserirLivro(Livro** lista, char* isbn,char* titulo, char* autor, char* ano) {
+    Livro* novoLivro = criarLivro(isbn,titulo,autor,ano);
     int numLivro = 0;
     if (*lista == NULL) {
         *lista = novoLivro;
@@ -26,13 +26,13 @@ void inserirLivro(Livro** lista, char* isdn,char* titulo, char* autor, char* ano
         // Percorre a lista até o último livro
         Livro* atual = *lista;
         while (atual->proximo != NULL) {
-            if (strcmp(atual->isdn,novoLivro->isdn)==0) { //Caso de duplicata
+            if (strcmp(atual->isbn,novoLivro->isbn)==0) { //Caso de duplicata
                 atual->Exemplares++;
                 printf("Exemplar adicionado\n");
-            } else if(strcmp(atual->titulo,novoLivro->isdn)==0){
+            } else if(strcmp(atual->titulo,novoLivro->isbn)==0){
                 atual->Exemplares++;
                 printf("Exemplar adicionado\n");
-            } else if(strcmp(atual->autor,novoLivro->isdn)==0) {
+            } else if(strcmp(atual->autor,novoLivro->isbn)==0) {
                 atual->Exemplares++;
                 printf("Exemplar adicionado\n");
             }
@@ -47,7 +47,7 @@ void inserirLivro(Livro** lista, char* isdn,char* titulo, char* autor, char* ano
 void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
     if (livro != NULL) {
         printf("Livro n%d;",numLivros);
-        printf(" ISDN: %s;", livro->isdn);
+        printf(" isbn: %s;", livro->isbn);
         printf(" Titulo: %s;", livro->titulo);
         printf(" Autor: %s;", livro->autor);
         printf(" Ano: %s;", livro->ano);
@@ -58,8 +58,8 @@ void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
 void buscarLivro(Livro* lista, char* chave) { 
     Livro* atual = lista;
     int numLivro = 0;
-    while (atual != NULL) { //Percorre lista até encontrar isdn/titulo/autor = chave
-        if (strcmp(atual->isdn,chave)==0) {
+    while (atual != NULL) { //Percorre lista até encontrar isbn/titulo/autor = chave
+        if (strcmp(atual->isbn,chave)==0) {
             imprimirLivro(atual,numLivro);
         } else if(strcmp(atual->titulo,chave)==0){
             imprimirLivro(atual,numLivro);
@@ -73,7 +73,7 @@ void buscarLivro(Livro* lista, char* chave) {
 
 void checkInLivro(Livro* lista,char* chave) {
     while (lista != NULL) {
-        if (strcmp(lista->isdn,chave)==0) {
+        if (strcmp(lista->isbn,chave)==0) {
             lista->Exemplares++; //Adiciona unidade ao livro especificado
             printf("Check In realizado com sucesso\n");
             return;
@@ -85,7 +85,7 @@ void checkInLivro(Livro* lista,char* chave) {
 
 void checkOutLivro(Livro* lista,char* chave) {
     while (lista != NULL) {
-        if (strcmp(lista->isdn,chave)==0) {
+        if (strcmp(lista->isbn,chave)==0) {
             if(lista->Exemplares==0) {
                 printf("Livro nao disponivel\n");
             } else {
