@@ -19,7 +19,7 @@ Livro* criarLivro(char* isbn,char* titulo, char* autor, char* ano) {
 void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
     if (livro != NULL) {
         printf("Livro n%d;",numLivros);
-        printf(" isbn: %s;", livro->isbn);
+        printf(" ISBN: %s;", livro->isbn);
         printf(" Titulo: %s;", livro->titulo);
         printf(" Autor: %s;", livro->autor);
         printf(" Ano: %s;", livro->ano);

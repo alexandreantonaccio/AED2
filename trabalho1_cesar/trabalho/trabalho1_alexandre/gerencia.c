@@ -22,15 +22,15 @@ void LerArquivo(const char* filename,Livro** lista,int *numLivros) {
         } 
         else if(sscanf(line, "%s%[^;];",funcao,chave) == 2){ 
             if(strcmp(funcao,"SEARCH")== 0){ //Caso SEARCH
-                printf("Buscando...\n");
+                printf("Buscando '%s'\n",chave);
                 buscarLivro(*lista,chave);
             }
             if(strcmp(funcao,"CHECK_IN")== 0){ //Caso CHECK_IN
-                printf("Check in...\n");
+                printf("Check in '%s'\n");
                 checkInLivro(*lista,chave);
             }
             if(strcmp(funcao,"CHECK_OUT")== 0){ //Caso CHECK_OUT
-                printf("Check out...\n");
+                printf("Check out '%s'\n",chave);
                 checkOutLivro(*lista,chave);
             }
         else if (sscanf(line,"%s",funcao) == 1) { //Caso END
@@ -50,6 +50,6 @@ void LerArquivo(const char* filename,Livro** lista,int *numLivros) {
 int main(int agrc, char *argv[]) {
     Livro* lista = NULL;
     int numLivros = 0;
-    LerArquivo(argv,&lista,&numLivros);
+    LerArquivo(argv[1],&lista,&numLivros);
     return 0;
 }
