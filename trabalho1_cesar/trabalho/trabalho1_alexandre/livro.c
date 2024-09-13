@@ -11,38 +11,10 @@ Livro* criarLivro(char* isbn,char* titulo, char* autor, char* ano) {
     strcpy(novoLivro->titulo,titulo);
     strcpy(novoLivro->autor,autor);
     strcpy(novoLivro->ano,ano);
-    novoLivro->Exemplares = 1;
+    novoLivro->exemplares_disp = 1;
     novoLivro->proximo = NULL;
     return novoLivro;
 }
-
-// Função para inserir um novo livro no início da lista
-void inserirLivro(Livro** lista, char* isbn,char* titulo, char* autor, char* ano) {
-    Livro* novoLivro = criarLivro(isbn,titulo,autor,ano);
-    int numLivro = 0;
-    if (*lista == NULL) {
-        *lista = novoLivro;
-    } else {
-        // Percorre a lista até o último livro
-        Livro* atual = *lista;
-        while (atual->proximo != NULL) {
-            if (strcmp(atual->isbn,novoLivro->isbn)==0) { //Caso de duplicata
-                atual->Exemplares++;
-                printf("Exemplar adicionado\n");
-            } else if(strcmp(atual->titulo,novoLivro->isbn)==0){
-                atual->Exemplares++;
-                printf("Exemplar adicionado\n");
-            } else if(strcmp(atual->autor,novoLivro->isbn)==0) {
-                atual->Exemplares++;
-                printf("Exemplar adicionado\n");
-            }
-            numLivro++;
-            atual = atual->proximo;
-        }
-        atual->proximo = novoLivro;
-    }
-}
-
 
 void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
     if (livro != NULL) {
@@ -51,7 +23,37 @@ void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
         printf(" Titulo: %s;", livro->titulo);
         printf(" Autor: %s;", livro->autor);
         printf(" Ano: %s;", livro->ano);
-        printf(" Exemplares: %d\n", livro->Exemplares);
+        printf(" Exemplares disponiveis: %d\n", livro->exemplares_disp);
+    }
+}
+
+// Função para inserir um novo livro no início da lista
+void inserirLivro(Livro** lista, char* isbn,char* titulo, char* autor, char* ano) {
+    Livro* novoLivro = criarLivro(isbn,titulo,autor,ano);
+    int numLivro = 1;
+    if (*lista == NULL) {
+        *lista = novoLivro;
+        imprimirLivro(novoLivro,numLivro);
+    } else {
+        // Percorre a lista até o último livro
+        Livro* atual = *lista;
+        while (atual->proximo != NULL) {
+            if (strcmp(atual->isbn,novoLivro->isbn)==0) { //Caso de duplicata
+                atual->exemplares_disp++;
+                printf("Exemplar adicionado\n");
+            } else if(strcmp(atual->titulo,novoLivro->isbn)==0){
+                atual->exemplares_disp++;
+                printf("Exemplar adicionado\n");
+            } else if(strcmp(atual->autor,novoLivro->isbn)==0) {
+                atual->exemplares_disp++;
+                printf("Exemplar adicionado\n");
+            }
+            atual = atual->proximo;
+            numLivro++;
+        }
+        numLivro++;
+        atual->proximo = novoLivro;
+        imprimirLivro(novoLivro,numLivro);
     }
 }
 
@@ -74,8 +76,8 @@ void buscarLivro(Livro* lista, char* chave) {
 void checkInLivro(Livro* lista,char* chave) {
     while (lista != NULL) {
         if (strcmp(lista->isbn,chave)==0) {
-            lista->Exemplares++; //Adiciona unidade ao livro especificado
-            printf("Check In realizado com sucesso\n");
+            lista->exemplares_disp++; //Adiciona unidade ao livro especificado
+            printf("Check in realizado com sucesso\n");
             return;
         }
         lista = lista->proximo;
@@ -86,11 +88,11 @@ void checkInLivro(Livro* lista,char* chave) {
 void checkOutLivro(Livro* lista,char* chave) {
     while (lista != NULL) {
         if (strcmp(lista->isbn,chave)==0) {
-            if(lista->Exemplares==0) {
+            if(lista->exemplares_disp==0) {
                 printf("Livro nao disponivel\n");
             } else {
-                lista->Exemplares--; //Reduz uma unidade em caso de check out
-                printf("Check Out realizado com sucesso\n");
+                lista->exemplares_disp--; //Reduz uma unidade em caso de check out
+                printf("Check out realizado com sucesso\n");
             }
             return;
         }

@@ -8,6 +8,6 @@ typedef struct Livro {
     char titulo[40];
     char autor[100];
     char ano[6];
-    int Exemplares;
+    int exemplares_disp;
     struct Livro* proximo;
 } Livro;
