@@ -3,7 +3,7 @@
 #include <string.h>
 #include "livro.c"
 
-void LerArquivos(const char* filename,Livro** lista,int *numLivros) {
+void LerArquivo(const char* filename,Livro** lista,int *numLivros) {
     FILE *file = fopen(filename, "r");
     // Variáveis para armazenar os dados do arquivo
     char line[256];
@@ -47,34 +47,9 @@ void LerArquivos(const char* filename,Livro** lista,int *numLivros) {
 }
 
 
-int main() {
+int main(int agrc, char *argv[]) {
     Livro* lista = NULL;
     int numLivros = 0;
-    int opcao = 0;
-    char chave[100];
-    char isbn[100];
-    char titulo[100]; 
-    char autor[100];
-    char ano[6];
-    char nomeArquivo[50];
-    do {
-        printf("1 - Ler arquivo de teste\n");
-        printf("2 - Finalizar execucao\n");
-        scanf("%d",&opcao); 
-        
-        switch(opcao) {
-            case 1 :
-                printf("Nome do arquivo a ser lido\n");
-                scanf("%s",nomeArquivo);
-                LerArquivos(nomeArquivo,&lista,&numLivros);
-            break;
-            case 2 : 
-                printf("Fim do programa...");
-                break;
-            default :
-                printf("Opcao invalida");
-            break;
-        }
-    }while(opcao != 2);
+    LerArquivo(argv,&lista,&numLivros);
     return 0;
 }
