@@ -17,12 +17,12 @@ Livro* criarLivro(char* isbn,char* titulo, char* autor, char* ano) {
 
 void imprimirLivro(Livro* livro,int numLivros) { //Imprime Livro chamado
     if (livro != NULL) {
-        printf("Livro n%d;",numLivros);
-        printf(" ISBN:%s;", livro->isbn);
-        printf(" Titulo:%s;", livro->titulo);
-        printf(" Autor:%s;", livro->autor);
-        printf(" Ano:%s;", livro->ano);
-        printf(" Exemplares disponiveis: %d\n", livro->exemplares_disp);
+        printf("Livro n%d; ",numLivros);
+        printf("ISBN: %s; ", livro->isbn);
+        printf("Titulo: %s; ", livro->titulo);
+        printf("Autor: %s; ", livro->autor);
+        printf("Ano: %s; ", livro->ano);
+        printf("Exemplares disponiveis: %d;\n", livro->exemplares_disp);
     }
 }
 
@@ -44,7 +44,7 @@ void inserirLivro(Livro** lista, char* isbn,char* titulo, char* autor, char* ano
         if (strcmp(atual->isbn,isbn)==0) { //Caso de duplicata
             if((strcmp(atual->autor,autor)==0) && (strcmp(atual->titulo,titulo)==0) && (strcmp(atual->ano,ano)==0)) {
                 atual->exemplares_disp++;
-                printf("Exemplar adicionado a %s\n",atual->isbn);
+                printf("Exemplar adicionado a '%s'\n",atual->isbn);
                 return;
             }else {
                 printf("ERRO, livro com este ISBN ja foi inserido, dois livros diferentes nao podem possuir o mesmo ISBN\n");
@@ -60,7 +60,7 @@ void inserirLivro(Livro** lista, char* isbn,char* titulo, char* autor, char* ano
 
 void buscarLivro(Livro* lista, char* chave) { 
     Livro* atual = lista;
-    int numLivro = 0;
+    int numLivro = 1;
     while (atual != NULL) { //Percorre lista até encontrar isbn/titulo/autor = chave
         if (strcmp(atual->isbn,chave)==0) {
             imprimirLivro(atual,numLivro);
@@ -75,40 +75,43 @@ void buscarLivro(Livro* lista, char* chave) {
 }
 
 void checkInLivro(Livro* lista,char* chave) {
-    Livro* aux = lista;
-    while (aux != NULL) {
-        if (strcmp(aux->isbn,chave)==0) {
+    while (lista != NULL) {
+        if (strcmp(lista->isbn,chave)==0) {
             lista->exemplares_disp++; //Adiciona unidade ao livro especificado  
-            printf("Check in de%s realizado com sucesso, exemplares disponiveis:%d\n",chave,aux->exemplares_disp);
+            printf("Check in de '%s' realizado com sucesso, exemplares disponiveis:%d\n",chave,lista->exemplares_disp);
             return;
         }
-        aux = aux->proximo;
+        lista = lista->proximo;
     }
-    if(aux==NULL){
-        printf("Livro nao pertence a biblioteca\n");
+    if(lista==NULL){
+        printf("Livro '%s' nao pertence a biblioteca\n",chave);
     }
 }
 
 void checkOutLivro(Livro* lista,char* chave) {
-    Livro* aux = lista;
-    while (aux != NULL) {
-        if (strcmp(aux->isbn,chave)==0) {
-            if(aux->exemplares_disp==0) {
-                printf("Livro nao disponivel\n");
+    while (lista != NULL) {
+        if (strcmp(lista->isbn,chave)==0) {
+            if(lista->exemplares_disp==0) {
+                printf("Livro '%s' nao disponivel\n",chave);
+                return;
             } else {
                 lista->exemplares_disp--; //Reduz uma unidade em caso de check out
-                printf("Check out de%s realizado com sucesso, exemplares disponiveis:%d\n",chave),lista->exemplares_disp;
+                printf("Check out de '%s' realizado com sucesso, exemplares disponiveis:%d\n",chave,lista->exemplares_disp);
+                return;
             }
-            return;
         }
-        aux = aux->proximo;
+        lista = lista->proximo;
     }
-    if(aux==NULL){
-        printf("Livro nao pertence a biblioteca\n");
+    if(lista==NULL){
+        printf("Livro '%s' nao pertence a biblioteca\n",chave);
     }
 }
 
 void impimirBiblioteca(Livro *lista){ //Impressao dos livros em ordem de inserção
+    if(lista==NULL) {
+        printf("Lista vazia");
+        return;
+    }
     printf("\nImprimindo livros da biblioteca!\n\n");
     int numLivros = 1;
     while(lista!=NULL){
