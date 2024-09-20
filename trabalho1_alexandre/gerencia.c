@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "livro.c"
+#include "livro.h"
 
 void LerArquivo(const char* filename,Livro** lista,int *numLivros) {
     FILE *file = fopen(filename, "r");
-    // Variáveis para armazenar os dados do arquivo
     char line[256];
     char funcao[40];
     char chave[100];
@@ -26,7 +25,7 @@ void LerArquivo(const char* filename,Livro** lista,int *numLivros) {
                 buscarLivro(*lista,chave);
             }
             if(strcmp(funcao,"CHECK_IN")== 0){ //Caso CHECK_IN
-                printf("Check in '%s'\n");
+                printf("Check in '%s'\n",chave);
                 checkInLivro(*lista,chave);
             }
             if(strcmp(funcao,"CHECK_OUT")== 0){ //Caso CHECK_OUT
