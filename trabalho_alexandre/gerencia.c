@@ -21,11 +21,11 @@ void LerArquivo(const char* filename, Livro** lista, int *numLivros) {
 
     // Lendo o arquivo linha por linha
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%s%[^;];%[^;];%[^;];%[^\n]",funcao,isbn,titulo,autor,ano) == 5) { //Caso ADD
+        if (sscanf(line, "%s %[^;]; %[^;]; %[^;]; %[^\n]", funcao, isbn, titulo, autor, ano) == 5) { //Caso ADD
             // Adiciona o livro à lista
             inserirLivro(lista,isbn,titulo,autor,ano);
         } 
-        else if(sscanf(line, "%s%[^;];",funcao,chave) == 2){ 
+        else if(sscanf(line, "%s %[^;];", funcao, chave) == 2){ 
             if(strcmp(funcao,"SEARCH")== 0){ //Caso SEARCH
                 printf("Buscando '%s'\n",chave);
                 buscarLivro(*lista,chave);
@@ -38,7 +38,7 @@ void LerArquivo(const char* filename, Livro** lista, int *numLivros) {
                 printf("Check out '%s'\n",chave);
                 checkOutLivro(*lista,chave);
             }
-        else if (sscanf(line,"%s",funcao) == 1) { //Caso END
+        else if (sscanf(line,"%s", funcao) == 1) { //Caso END
             if(strcmp(funcao,"END")==0) {
                 return;
             }
