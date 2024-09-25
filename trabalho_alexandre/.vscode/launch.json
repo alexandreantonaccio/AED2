@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/alexandre/Documents/GitHub/AED2",
-      "program": "c:/Users/alexandre/Documents/GitHub/AED2/build/Debug/outDebug",
+      "cwd": "c:/Users/alexandre/Desktop/trabalho_alexandre",
+      "program": "c:/Users/alexandre/Desktop/trabalho_alexandre/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
