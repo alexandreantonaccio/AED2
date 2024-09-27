@@ -1,0 +1,9 @@
+ADD wi-fi ao vivo; pagode; 161 1 0
+ADD de graça ou pagando; piseiro; 120 0 0
+ADD os meninos da nova; pop; 230 0 0
+PLAY wi-fi ao vivo;
+FAVOR os meninos da nova;
+PAUSE
+PLAY de graça ou pagando;
+END
+FINISH

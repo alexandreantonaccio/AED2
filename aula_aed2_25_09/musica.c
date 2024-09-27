@@ -53,6 +53,6 @@ int gerar_id_musica(t_musica* m ){
 }
 
 void destroy_musica(t_musica* m){
-    assert(m!=NULL);
+    assert(m!=NULL);    
     free(m);
 }

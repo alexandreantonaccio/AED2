@@ -3,6 +3,7 @@
 #include "thash.h"
 #include "string.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 t_musica* ler_musica(){
 
