@@ -28,6 +28,7 @@ int comparar_elem_hash(void* e1, void* e2){
 void imprimir_elem_hash(void* ee){
     t_elem_hash* e = ee;
 
+
     printf("%d %p\n", e->chave, e->carga);
 }
 

@@ -1,9 +1,22 @@
 //#include "../../../Modulo01/src/202402/musica.h"
 #include "musica.h"
-#include "thash.h"
-#include "string.h"
+#include "dicio.h"
 #include "stdio.h"
-#include "stdlib.h"
+#include "pilha.h"
+#include "fila.h"
+
+typedef struct tocador{
+    t_dicio* colecao;
+    t_fila* rp;
+    t_pilha* ultimas_tocadas;
+}t_tocador;
+
+criar_tocador(){
+    t_tocador *t = malloc(sizeof(t_tocador));
+    t->colecao = criar_dicio();
+    t->rp = criar_fila(0);
+    t->ultimas_tocadas = criar_pilha();
+}
 
 t_musica* ler_musica(){
 
@@ -30,7 +43,8 @@ t_musica* ler_musica(){
 
 // caso de uso da hashing
 int main(){
-    t_hash* sumsung = criar_hash(0.7);
+    t_tocador* sumsung = criar_tocador(0.7);
+    
     char cmd[15];
     scanf("%s", cmd);
     while(strcmp(cmd,"FINISH") != 0){
